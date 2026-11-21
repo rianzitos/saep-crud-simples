@@ -1,0 +1,22 @@
+/* TEMA OCEANO: azul-marinho profundo, ciano, cantos suaves */
+:root {
+  --fundo: #0a1726;
+  --cartao: #112338;
+  --texto: #e2edf8;
+  --suave: #86a2be;
+  --linha: #223f5d;
+  --destaque: #4cc9d6;
+  --sobre-destaque: #04222a;
+  --perigo: #ff8a80;
+
+  --raio: 12px;
+  --borda: 1px;
+  --sombra: 0 10px 30px rgba(0, 0, 0, .35);
+  --fonte: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --fonte-titulo: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema */
+.btn-principal { box-shadow: 0 0 18px rgba(76, 201, 214, .35); }
+input { background: #0c1b2d; }

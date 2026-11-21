@@ -1,0 +1,22 @@
+/* TEMA PAPEL: jornal/caderno, serifado, tinta e vermelho-tijolo */
+:root {
+  --fundo: #efe7d6;
+  --cartao: #fbf6ea;
+  --texto: #251f18;
+  --suave: #7b6f5e;
+  --linha: #d8ccb4;
+  --destaque: #bf3a22;
+  --sobre-destaque: #fff6ec;
+  --perigo: #9c2415;
+
+  --raio: 2px;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: Georgia, "Times New Roman", serif;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema */
+h1 { font-style: italic; }
+.topo { border-bottom: 3px double var(--linha); margin-bottom: 1.25rem; padding-bottom: 1rem; }

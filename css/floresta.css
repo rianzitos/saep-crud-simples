@@ -1,0 +1,21 @@
+/* TEMA FLORESTA: verdes terrosos, cantos bem redondos */
+:root {
+  --fundo: #dfe7d2;
+  --cartao: #f3f6ea;
+  --texto: #1d2b1c;
+  --suave: #60775a;
+  --linha: #c3d0ae;
+  --destaque: #3b7a3d;
+  --sobre-destaque: #f3f6ea;
+  --perigo: #b3402d;
+
+  --raio: 18px;
+  --borda: 2px;
+  --sombra: 0 6px 0 #c3d0ae;
+  --fonte: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --fonte-titulo: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema: botões em formato de pílula */
+.btn, .temas a, .etiqueta, input { border-radius: 999px; }

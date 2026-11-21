@@ -1,58 +1,49 @@
-# SAEP CRUD Simples
+# CRUD de Produtos em PHP
 
-CRUD de **produtos** (cadastrar, listar, editar, excluir, buscar) com 5 temas de CSS.
-Node + Express + SQLite. São só 5 arquivos de código.
+PHP puro + MySQL (PDO). Sem framework, sem JavaScript, sem instalar nada além do XAMPP.
+Tem 5 estilos de CSS para trocar com um clique.
 
-## Como rodar
+## Como rodar (XAMPP)
 
-Precisa de Node **22.13 ou mais novo** (o SQLite já vem dentro dele).
+1. Copie esta pasta para `C:\xampp\htdocs\saep-crud-simples` e ligue **Apache** e **MySQL**.
+2. No phpMyAdmin, aba **Importar**, escolha o `banco.sql` e execute (cria o banco `saep_produtos` com a tabela `produtos`).
+3. Abra http://localhost/saep-crud-simples/
 
-```bash
-npm install
-npm start
-```
+Sem XAMPP: rode `mysql -u root < banco.sql` e depois `php -S localhost:8000` dentro da pasta.
 
-Abra http://localhost:3000. O banco (`banco.db`) é criado sozinho, com 4 produtos de exemplo.
+Se o seu MySQL tiver senha no `root`, mude em `conexao.php`.
 
 ## Arquivos
 
 | Arquivo | O que faz |
 |---|---|
-| `server.js` | Banco, validação e as 4 rotas da API |
-| `public/index.html` | Estrutura da página (formulário e tabela) |
-| `public/app.js` | Conversa com a API e desenha a tela |
-| `public/style.css` | Os 5 temas |
+| `banco.sql` | Cria o banco e a tabela |
+| `conexao.php` | Conexão com o banco, `h()` (escapa HTML) e `validar()` |
+| `index.php` | **R**ead: lista os produtos |
+| `criar.php` | **C**reate: cadastra |
+| `editar.php` | **U**pdate: altera (`editar.php?id=3`) |
+| `excluir.php` | **D**elete: apaga (recebe o id por POST) |
+| `formulario.php` | Formulário usado por `criar.php` e `editar.php` |
+| `cabecalho.php` / `rodape.php` | Topo e fim de todas as páginas |
+| `tema.php` | Guarda o tema escolhido num cookie |
+| `css/base.css` | Layout comum a todos os temas |
+| `css/papel.css`, `terminal.css`, `oceano.css`, `brutal.css`, `floresta.css` | Os 5 estilos |
 
-## API
+## Adicionar uma coluna nova (ex.: `marca`)
 
-| Método | Rota | Ação |
-|---|---|---|
-| GET | `/api/produtos?busca=texto` | Lista (e filtra) |
-| POST | `/api/produtos` | Cadastra |
-| PUT | `/api/produtos/:id` | Altera |
-| DELETE | `/api/produtos/:id` | Exclui |
+Procure por **`[NOVA COLUNA]`** no código. São 5 lugares:
 
-## Como adicionar uma coluna nova (ex.: `marca`)
+1. `banco.sql`: `marca VARCHAR(50) NOT NULL,`
+   (com o banco já criado, rode no phpMyAdmin: `ALTER TABLE produtos ADD marca VARCHAR(50) NOT NULL DEFAULT '';`)
+2. `conexao.php`: regra de validação na função `validar()` (se for obrigatório)
+3. `formulario.php`: `<label>Marca <input name="marca" value="<?= h($produto['marca']) ?>"></label>`
+4. `criar.php` e `editar.php`: pegar `$_POST['marca']`, e incluir a coluna no `INSERT` / `UPDATE`
+5. `index.php`: um `<th>Marca</th>` e um `<td><?= h($p['marca']) ?></td>`
 
-Procure por **`[NOVA COLUNA]`** no código. São 4 lugares:
+Em `criar.php`, o array inicial `$produto` também precisa da chave nova (`'marca' => ''`).
 
-1. `server.js` → na `CREATE TABLE`: `marca TEXT NOT NULL,`
-2. `server.js` → na função `validar`: `marca: String(corpo.marca ?? '').trim(),`
-3. `public/index.html` → no formulário: um `<label>` + `<input name="marca">`
-4. `public/index.html` → um `<th>Marca</th>` na tabela e, em `public/app.js`, o `<td>` correspondente
+## Trocar de estilo / criar um 6º
 
-Depois **apague o `banco.db`** e rode de novo (a tabela só é criada quando o arquivo não existe).
-Se não puder apagar os dados, rode no lugar: `ALTER TABLE produtos ADD COLUMN marca TEXT DEFAULT ''`.
-
-O INSERT, o UPDATE e o preenchimento do formulário na hora de editar já se adaptam sozinhos,
-desde que o `name` do input seja igual ao nome da coluna.
-
-## Como mudar para outro tipo de cadastro (ex.: clientes)
-
-Troque `produtos` pelo novo nome e ajuste as colunas nos mesmos lugares acima.
-
-## Os 5 temas
-
-**Papel**, **Terminal**, **Oceano**, **Brutal** e **Floresta**. A escolha fica salva no navegador.
-No `style.css`, cada tema é um bloco que só muda variáveis (`--fundo`, `--destaque`, `--raio`...).
-Para criar outro: copie um bloco, mude os valores e adicione um botão no `index.html`.
+O tema fica num cookie. Cada arquivo em `css/` só define variáveis de cor, fonte e borda.
+Para criar outro: copie um desses arquivos, mude os valores e adicione o nome em `$temas`
+(`cabecalho.php`) e em `$permitidos` (`tema.php`).

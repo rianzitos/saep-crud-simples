@@ -1,0 +1,24 @@
+/* TEMA TERMINAL: fundo preto, texto verde, tudo monoespaçado */
+:root {
+  --fundo: #070b08;
+  --cartao: #0d140f;
+  --texto: #b4f0bf;
+  --suave: #5c8967;
+  --linha: #1d3624;
+  --destaque: #3dff8b;
+  --sobre-destaque: #03140a;
+  --perigo: #ff6b5e;
+
+  --raio: 0;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --fonte-titulo: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema: prompt antes do título e cursor piscando */
+h1::before { content: "> "; color: var(--destaque); }
+h1::after { content: "_"; color: var(--destaque); animation: piscar 1s steps(1) infinite; }
+.card { border-style: dashed; }
+@keyframes piscar { 50% { opacity: 0; } }

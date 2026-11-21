@@ -1,0 +1,163 @@
+/* ============================================================
+   BASE: layout e componentes, igual para todos os temas.
+   Tudo aqui usa variáveis (var(--algo)); o valor delas
+   é definido no arquivo do tema (papel.css, terminal.css...).
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  line-height: 1.5;
+}
+
+h1, h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  text-transform: var(--caixa-alta);
+  letter-spacing: -.01em;
+}
+h1 { font-size: 2.2rem; line-height: 1.1; }
+h2 { font-size: 1.2rem; }
+.sub { margin: .25rem 0 0; color: var(--suave); }
+
+/* ---------- topo e botões de tema ---------- */
+.topo {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.temas { display: flex; flex-wrap: wrap; gap: .4rem; }
+.temas a {
+  font-size: .85rem;
+  padding: .3rem .8rem;
+  color: var(--texto);
+  text-decoration: none;
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+}
+.temas a:hover { border-color: var(--destaque); }
+.temas a.ativo { background: var(--destaque); border-color: var(--destaque); color: var(--sobre-destaque); }
+
+/* ---------- caixa principal ---------- */
+main { max-width: 960px; margin: 0 auto; padding: 0 1rem 3rem; }
+
+.card {
+  background: var(--cartao);
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 1.5rem;
+}
+.card > h2 { margin-bottom: 1.25rem; }
+
+.lista-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- botões (servem para <a> e <button>) ---------- */
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-size: .9rem;
+  padding: .5rem 1rem;
+  text-decoration: none;
+  text-transform: var(--caixa-alta);
+  cursor: pointer;
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  background: transparent;
+  color: var(--texto);
+}
+.btn:active { transform: translateY(1px); }
+.btn-principal { background: var(--destaque); border-color: var(--destaque); color: var(--sobre-destaque); }
+.btn-sec:hover { border-color: var(--texto); }
+.btn-perigo { color: var(--perigo); border-color: var(--perigo); }
+.btn-perigo:hover { background: var(--perigo); color: var(--cartao); }
+
+/* ---------- formulário ---------- */
+form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; align-items: end; }
+
+label {
+  display: grid;
+  gap: .3rem;
+  font-size: .85rem;
+  color: var(--suave);
+  text-transform: var(--caixa-alta);
+}
+input {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--fundo);
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  padding: .55rem .7rem;
+  width: 100%;
+}
+input:focus-visible, .btn:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+.acoes { display: flex; gap: .5rem; }
+
+/* ---------- avisos ---------- */
+.aviso { margin: 0 0 1rem; color: var(--destaque); font-size: .9rem; }
+.erros {
+  margin: 0 0 1.25rem;
+  padding: .75rem 1rem .75rem 2rem;
+  color: var(--perigo);
+  border: var(--borda) solid var(--perigo);
+  border-radius: var(--raio);
+}
+.vazio { text-align: center; color: var(--suave); margin: 2rem 0 1rem; }
+
+/* ---------- tabela ---------- */
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--suave);
+  padding: .5rem .6rem;
+  border-bottom: var(--borda) solid var(--texto);
+}
+td { padding: .7rem .6rem; border-bottom: var(--borda) solid var(--linha); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+
+.botoes { text-align: right; white-space: nowrap; }
+.botoes .btn, .botoes form { display: inline-block; margin-left: .3rem; }
+.botoes form { margin-right: 0; }
+
+.etiqueta {
+  font-style: normal;
+  margin-left: .4rem;
+  padding: .05rem .45rem;
+  font-size: .7rem;
+  text-transform: uppercase;
+  color: var(--perigo);
+  border: var(--borda) solid var(--perigo);
+  border-radius: var(--raio);
+}
+
+/* ---------- celular: a tabela vira lista de fichas ---------- */
+@media (max-width: 700px) {
+  thead { display: none; }
+  table, tbody, tr, td { display: block; }
+  tr { padding: .7rem 0; border-bottom: var(--borda) solid var(--linha); }
+  tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: .2rem 0; display: flex; justify-content: space-between; gap: 1rem; }
+  td[data-rotulo]::before { content: attr(data-rotulo); color: var(--suave); }
+  .botoes { justify-content: flex-end; padding-top: .5rem; }
+}
