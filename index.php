@@ -68,6 +68,12 @@ require 'cabecalho.php';
                             <span><?= $p['quantidade'] ?><?php if ($p['quantidade'] <= 5): ?><em class="etiqueta">baixo</em><?php endif; ?></span>
                         </td>
 
+                        <?php /* TINYINT sim/não: o banco guarda 1 ou 0, mas na tela mostre texto.
+                                  Adicione um <th> e um <td> como estes (mesma ordem!):
+                                    <td data-rotulo="Ativo"><?= $p['ativo'] ? 'Sim' : 'Não' ?></td>
+                                  Ou com ícone:   <?= $p['ativo'] ? '✔' : '✘' ?>
+                                  Para listar só os ativos, mude o SELECT lá em cima para:
+                                    SELECT * FROM produtos WHERE ativo = 1 ORDER BY id DESC */ ?>
                         <td class="botoes">
                             <?php /* UPDATE: link que leva para editar.php mandando o id na URL */ ?>
                             <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sec">Editar</a>

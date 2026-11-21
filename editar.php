@@ -37,6 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'categoria'  => trim($_POST['categoria'] ?? ''),
         'preco'      => str_replace(',', '.', trim($_POST['preco'] ?? '')),
         'quantidade' => trim($_POST['quantidade'] ?? ''),
+
+        // TINYINT sim/não com CHECKBOX (desmarcado não é enviado pelo navegador):
+        // veio no $_POST = 1, não veio = 0. Sempre número, nunca true/false.
+        //   'ativo' => isset($_POST['ativo']) ? 1 : 0,
+        // Com SELECT (opções 1 e 0):  'ativo' => (int) ($_POST['ativo'] ?? 0),
     ];
 
     $erros = validar($produto);
@@ -45,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // [NOVA COLUNA] 4/5 (b) -> o UPDATE: acrescente  coluna = ?  na lista do SET.
         // O WHERE id = ? é essencial: sem ele, TODOS os registros seriam alterados!
+        // Com TINYINT: acrescente  ativo = ?  no SET e  $produto['ativo']  no execute(), antes do $id.
+        // Na hora de abrir o formulário, o valor salvo (1 ou 0) já vem do banco em $produto['ativo'],
+        // e é isso que o checkbox do formulario.php usa para ficar marcado ou não.
         $sql = 'UPDATE produtos SET nome = ?, categoria = ?, preco = ?, quantidade = ? WHERE id = ?';
         $pdo->prepare($sql)->execute([
             $produto['nome'],

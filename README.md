@@ -84,7 +84,30 @@ Dica: o `id` não aparece em formulário nenhum. O MySQL numera sozinho.
 | Inteiro | `INT` | `type="number" step="1"` |
 | Decimal (preço, nota) | `DECIMAL(10,2)` | `type="number" step="0.01"` |
 | Data | `DATE` | `type="date"` |
+| Sim/Não (verdadeiro/falso) | `TINYINT(1)` | `type="checkbox"` (veja abaixo) |
+| Número bem pequeno (idade, nota 0 a 10) | `TINYINT` | `type="number" step="1"` |
 | Opções fixas | `VARCHAR(30)` | `<select>` |
+
+### Coluna TINYINT (sim/não, 0 ou 1)
+
+`TINYINT(1)` guarda **0 (não)** ou **1 (sim)**. Serve para "ativo", "concluído", "disponível" etc.
+Exemplo com a coluna `ativo`. Procure por **`TINYINT`** nos comentários de cada arquivo:
+
+| Arquivo | O que fazer |
+|---|---|
+| `banco.sql` | Na tabela: `ativo TINYINT(1) NOT NULL DEFAULT 1` (vírgula na linha de cima). No INSERT de exemplo, um `1` ou `0` **sem aspas** no fim de cada linha |
+| `formulario.php` | `<label class="opcao"><input type="checkbox" name="ativo" value="1" <?= $produto['ativo'] ? 'checked' : '' ?>> Ativo</label>` |
+| `criar.php` | No array inicial: `'ativo' => 1` (já abre marcado). No `$_POST`: `'ativo' => isset($_POST['ativo']) ? 1 : 0,`. Inclua `ativo` no `INSERT` |
+| `editar.php` | No `$_POST`: `'ativo' => isset($_POST['ativo']) ? 1 : 0,`. Inclua `ativo = ?` no `UPDATE` |
+| `index.php` | `<th>Ativo</th>` e `<td><?= $p['ativo'] ? 'Sim' : 'Não' ?></td>` |
+
+Duas pegadinhas:
+
+- O checkbox desmarcado **não é enviado** pelo navegador. Por isso o `isset(...) ? 1 : 0`.
+- Passe sempre **número** (1 ou 0) para o banco, nunca `true`/`false`. O `false` vira texto vazio e o MySQL dá erro.
+
+Comandos úteis no SQL: `INSERT ... VALUES ('Mouse', 1)` · `SELECT * FROM produtos WHERE ativo = 1` · `UPDATE produtos SET ativo = 0 WHERE id = 3`.
+Se preferir uma lista "Sim/Não" em vez de checkbox, o modelo com `<select>` está no comentário do `formulario.php`.
 
 ### Se a prova pedir uma segunda tabela (ex.: alunos **e** turmas)
 

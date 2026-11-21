@@ -51,6 +51,12 @@ function validar($produto)
     //     if (filter_var($produto['email'], FILTER_VALIDATE_EMAIL) === false) { ... }
     //   Data (o <input type="date"> já manda no formato AAAA-MM-DD):
     //     if (strtotime($produto['nascimento']) === false) { ... }
+    //   TINYINT(1) sim/não com CHECKBOX: não precisa validar (criar.php e editar.php já
+    //     transformam em 1 ou 0, não tem como vir valor errado).
+    //   TINYINT(1) sim/não com SELECT (opções 1 e 0): confira se veio uma das duas:
+    //     if (!in_array($produto['ativo'], [0, 1], true)) { $erros[] = 'Escolha Sim ou Não.'; }
+    //   TINYINT como número pequeno (ex.: idade de 0 a 120):
+    //     if (filter_var($produto['idade'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 120]]) === false) { ... }
 
     if ($produto['nome'] === '') {
         $erros[] = 'Informe o nome do produto.';
