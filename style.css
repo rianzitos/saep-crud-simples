@@ -1,7 +1,23 @@
 /* ============================================================
-   BASE: layout e componentes, igual para todos os temas.
-   Tudo aqui usa variáveis (var(--algo)); o valor delas
-   é definido no arquivo do tema (papel.css, terminal.css...).
+   style.css  (o ÚNICO arquivo de CSS do site)
+
+   O arquivo tem 2 partes:
+
+   1) LAYOUT (esta parte, logo abaixo): tamanhos, grade, tabela,
+      botões, formulário. Usa só variáveis (var(--algo)), então
+      NÃO precisa mexer aqui para mudar o visual.
+
+   2) TEMA (no FINAL do arquivo): define o valor das variáveis
+      (cores, fonte, borda, cantos) e alguns detalhes extras.
+
+   COMO TROCAR DE ESTILO
+   - Abra o temas.css (ele traz os 5 estilos prontos).
+   - Copie o tema que você quer, inclusive as linhas de
+     INÍCIO e FIM, e cole no final deste arquivo no lugar do
+     tema que está lá (apague o antigo inteiro).
+   - Recarregue a página (Ctrl+F5).
+
+   Quer um visual seu? Edite os valores do bloco :root do tema.
    ============================================================ */
 
 * { box-sizing: border-box; }
@@ -24,7 +40,7 @@ h1 { font-size: 2.2rem; line-height: 1.1; }
 h2 { font-size: 1.2rem; }
 .sub { margin: .25rem 0 0; color: var(--suave); }
 
-/* ---------- topo e botões de tema ---------- */
+/* ---------- topo ---------- */
 .topo {
   max-width: 960px;
   margin: 0 auto;
@@ -35,17 +51,6 @@ h2 { font-size: 1.2rem; }
   align-items: flex-end;
   justify-content: space-between;
 }
-.temas { display: flex; flex-wrap: wrap; gap: .4rem; }
-.temas a {
-  font-size: .85rem;
-  padding: .3rem .8rem;
-  color: var(--texto);
-  text-decoration: none;
-  border: var(--borda) solid var(--linha);
-  border-radius: var(--raio);
-}
-.temas a:hover { border-color: var(--destaque); }
-.temas a.ativo { background: var(--destaque); border-color: var(--destaque); color: var(--sobre-destaque); }
 
 /* ---------- caixa principal ---------- */
 main { max-width: 960px; margin: 0 auto; padding: 0 1rem 3rem; }
@@ -98,7 +103,7 @@ label {
   color: var(--suave);
   text-transform: var(--caixa-alta);
 }
-input {
+input, select, textarea {
   font: inherit;
   font-size: 1rem;
   color: var(--texto);
@@ -108,7 +113,7 @@ input {
   padding: .55rem .7rem;
   width: 100%;
 }
-input:focus-visible, .btn:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
 .acoes { display: flex; gap: .5rem; }
 
 /* ---------- avisos ---------- */
@@ -161,3 +166,31 @@ tr:last-child td { border-bottom: 0; }
   td[data-rotulo]::before { content: attr(data-rotulo); color: var(--suave); }
   .botoes { justify-content: flex-end; padding-top: .5rem; }
 }
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: PAPEL (jornal/caderno, serifado, vermelho-tijolo) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #efe7d6;
+  --cartao: #fbf6ea;
+  --texto: #251f18;
+  --suave: #7b6f5e;
+  --linha: #d8ccb4;
+  --destaque: #bf3a22;
+  --sobre-destaque: #fff6ec;
+  --perigo: #9c2415;
+
+  --raio: 2px;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: Georgia, "Times New Roman", serif;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema */
+h1 { font-style: italic; }
+.topo { border-bottom: 3px double var(--linha); margin-bottom: 1.25rem; padding-bottom: 1rem; }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */

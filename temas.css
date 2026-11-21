@@ -1,0 +1,173 @@
+/* ============================================================
+   temas.css  —  os 5 estilos prontos, só para COPIAR.
+   Este arquivo NÃO é usado pelo site (nenhuma página liga a ele).
+
+   Como usar:
+   1) Escolha um tema abaixo.
+   2) Copie do "INÍCIO DO TEMA" até o "FIM DO TEMA".
+   3) Abra o style.css, apague o tema que está no final dele
+      (também de INÍCIO até FIM) e cole o novo no lugar.
+
+   Temas: PAPEL | TERMINAL | OCEANO | BRUTAL | FLORESTA
+
+   O que cada variável faz:
+     --fundo           cor do fundo da página
+     --cartao          cor da caixa branca onde ficam a tabela e o formulário
+     --texto           cor do texto principal
+     --suave           cor do texto secundário (rótulos, cabeçalho da tabela)
+     --linha           cor das bordas e linhas divisórias
+     --destaque        cor principal (botão principal, valores em destaque)
+     --sobre-destaque  cor do texto que fica EM CIMA da cor de destaque
+     --perigo          cor do botão Excluir e das mensagens de erro
+     --raio            arredondamento dos cantos (0 = quadrado)
+     --borda           espessura das bordas
+     --sombra          sombra das caixas (none = sem sombra)
+     --fonte           fonte do texto
+     --fonte-titulo    fonte dos títulos
+     --caixa-alta      uppercase = tudo em maiúsculas | none = normal
+   ============================================================ */
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: PAPEL (jornal/caderno, serifado, vermelho-tijolo) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #efe7d6;
+  --cartao: #fbf6ea;
+  --texto: #251f18;
+  --suave: #7b6f5e;
+  --linha: #d8ccb4;
+  --destaque: #bf3a22;
+  --sobre-destaque: #fff6ec;
+  --perigo: #9c2415;
+
+  --raio: 2px;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: Georgia, "Times New Roman", serif;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema */
+h1 { font-style: italic; }
+.topo { border-bottom: 3px double var(--linha); margin-bottom: 1.25rem; padding-bottom: 1rem; }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: TERMINAL (fundo preto, texto verde, monoespaçado) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #070b08;
+  --cartao: #0d140f;
+  --texto: #b4f0bf;
+  --suave: #5c8967;
+  --linha: #1d3624;
+  --destaque: #3dff8b;
+  --sobre-destaque: #03140a;
+  --perigo: #ff6b5e;
+
+  --raio: 0;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --fonte-titulo: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema: prompt antes do título e cursor piscando */
+h1::before { content: "> "; color: var(--destaque); }
+h1::after { content: "_"; color: var(--destaque); animation: piscar 1s steps(1) infinite; }
+.card { border-style: dashed; }
+@keyframes piscar { 50% { opacity: 0; } }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: OCEANO (azul-marinho profundo, ciano, cantos suaves) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #0a1726;
+  --cartao: #112338;
+  --texto: #e2edf8;
+  --suave: #86a2be;
+  --linha: #223f5d;
+  --destaque: #4cc9d6;
+  --sobre-destaque: #04222a;
+  --perigo: #ff8a80;
+
+  --raio: 12px;
+  --borda: 1px;
+  --sombra: 0 10px 30px rgba(0, 0, 0, .35);
+  --fonte: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --fonte-titulo: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema */
+.btn-principal { box-shadow: 0 0 18px rgba(76, 201, 214, .35); }
+input, select, textarea { background: #0c1b2d; }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: BRUTAL (amarelo berrante, borda grossa, sombra dura) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #ffe14a;
+  --cartao: #ffffff;
+  --texto: #111111;
+  --suave: #4a4a4a;
+  --linha: #111111;
+  --destaque: #2f6bff;
+  --sobre-destaque: #ffffff;
+  --perigo: #e5251b;
+
+  --raio: 0;
+  --borda: 3px;
+  --sombra: 6px 6px 0 #111111;
+  --fonte: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --fonte-titulo: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --caixa-alta: uppercase;
+}
+
+/* detalhes só deste tema: botões "pesados" que afundam ao clicar */
+h1 { font-size: 2.6rem; }
+.btn { border-color: #111; background: #fff; box-shadow: 3px 3px 0 #111; font-weight: 700; }
+.btn-principal { background: var(--destaque); }
+.btn:active { transform: translate(3px, 3px); box-shadow: none; }
+th { border-bottom-width: 3px; color: #111; }
+input, select, textarea { background: #fff; }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */
+
+
+/* >>>>>>>>>> INÍCIO DO TEMA: FLORESTA (verdes terrosos, cantos bem redondos) >>>>>>>>>> */
+
+/* Variáveis: é aqui que você troca cores, fonte, borda e cantos */
+:root {
+  --fundo: #dfe7d2;
+  --cartao: #f3f6ea;
+  --texto: #1d2b1c;
+  --suave: #60775a;
+  --linha: #c3d0ae;
+  --destaque: #3b7a3d;
+  --sobre-destaque: #f3f6ea;
+  --perigo: #b3402d;
+
+  --raio: 18px;
+  --borda: 2px;
+  --sombra: 0 6px 0 #c3d0ae;
+  --fonte: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --fonte-titulo: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --caixa-alta: none;
+}
+
+/* detalhes só deste tema: botões em formato de pílula */
+.btn, .etiqueta, input, select { border-radius: 999px; }
+
+/* <<<<<<<<<< FIM DO TEMA <<<<<<<<<< */
