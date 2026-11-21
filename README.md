@@ -1,49 +1,108 @@
-# CRUD de Produtos em PHP
+# CRUD em PHP (exemplo: produtos)
 
-PHP puro + MySQL (PDO). Sem framework, sem JavaScript, sem instalar nada além do XAMPP.
-Tem 5 estilos de CSS para trocar com um clique.
+PHP puro + MySQL (PDO). Sem framework e sem JavaScript (só o `confirm()` do botão Excluir).
 
 ## Como rodar (XAMPP)
 
 1. Copie esta pasta para `C:\xampp\htdocs\saep-crud-simples` e ligue **Apache** e **MySQL**.
-2. No phpMyAdmin, aba **Importar**, escolha o `banco.sql` e execute (cria o banco `saep_produtos` com a tabela `produtos`).
+2. No phpMyAdmin, aba **Importar**, escolha o `banco.sql` e execute.
 3. Abra http://localhost/saep-crud-simples/
 
-Sem XAMPP: rode `mysql -u root < banco.sql` e depois `php -S localhost:8000` dentro da pasta.
-
-Se o seu MySQL tiver senha no `root`, mude em `conexao.php`.
+Sem XAMPP: `mysql -u root < banco.sql` e depois `php -S localhost:8000` dentro da pasta.
+Se o `root` do seu MySQL tiver senha, mude em `conexao.php`.
 
 ## Arquivos
 
 | Arquivo | O que faz |
 |---|---|
-| `banco.sql` | Cria o banco e a tabela |
+| `banco.sql` | Cria o banco, a tabela e dados de exemplo |
 | `conexao.php` | Conexão com o banco, `h()` (escapa HTML) e `validar()` |
-| `index.php` | **R**ead: lista os produtos |
+| `index.php` | **R**ead: lista os registros |
 | `criar.php` | **C**reate: cadastra |
 | `editar.php` | **U**pdate: altera (`editar.php?id=3`) |
-| `excluir.php` | **D**elete: apaga (recebe o id por POST) |
+| `excluir.php` | **D**elete: apaga (id por POST) |
 | `formulario.php` | Formulário usado por `criar.php` e `editar.php` |
 | `cabecalho.php` / `rodape.php` | Topo e fim de todas as páginas |
-| `tema.php` | Guarda o tema escolhido num cookie |
-| `css/base.css` | Layout comum a todos os temas |
-| `css/papel.css`, `terminal.css`, `oceano.css`, `brutal.css`, `floresta.css` | Os 5 estilos |
+| `style.css` | **O** CSS do site (único arquivo de estilo) |
+| `temas.css` | Os 5 estilos prontos, só para copiar (o site não usa este arquivo) |
 
-## Adicionar uma coluna nova (ex.: `marca`)
+Nos arquivos PHP, procure por estas etiquetas:
 
-Procure por **`[NOVA COLUNA]`** no código. São 5 lugares:
+- **`[ADAPTAR]`**: tudo que tem o assunto "produto" (nome da tabela, títulos, textos).
+- **`[NOVA COLUNA]`**: tudo que precisa mudar quando as colunas mudam (numeradas de 1/5 a 5/5).
 
-1. `banco.sql`: `marca VARCHAR(50) NOT NULL,`
-   (com o banco já criado, rode no phpMyAdmin: `ALTER TABLE produtos ADD marca VARCHAR(50) NOT NULL DEFAULT '';`)
-2. `conexao.php`: regra de validação na função `validar()` (se for obrigatório)
-3. `formulario.php`: `<label>Marca <input name="marca" value="<?= h($produto['marca']) ?>"></label>`
-4. `criar.php` e `editar.php`: pegar `$_POST['marca']`, e incluir a coluna no `INSERT` / `UPDATE`
-5. `index.php`: um `<th>Marca</th>` e um `<td><?= h($p['marca']) ?></td>`
+---
 
-Em `criar.php`, o array inicial `$produto` também precisa da chave nova (`'marca' => ''`).
+## Adaptar para outro assunto (a prova pede alunos, clientes, livros...)
 
-## Trocar de estilo / criar um 6º
+Exemplo: transformar **produtos** em **alunos** (nome, turma, nota).
 
-O tema fica num cookie. Cada arquivo em `css/` só define variáveis de cor, fonte e borda.
-Para criar outro: copie um desses arquivos, mude os valores e adicione o nome em `$temas`
-(`cabecalho.php`) e em `$permitidos` (`tema.php`).
+### Passo 1: trocar as palavras (Localizar e Substituir)
+
+No VS Code: `Ctrl+Shift+H` (substituir em todos os arquivos). Ative **"Aa" (diferenciar maiúsculas)** e substitua, nesta ordem:
+
+| Trocar | Por |
+|---|---|
+| `produtos` | `alunos` |
+| `produto` | `aluno` |
+| `Produtos` | `Alunos` |
+| `Produto` | `Aluno` |
+
+Isso já muda: o nome da tabela e do banco (`saep_alunos`), as variáveis (`$aluno`, `$alunos`), os títulos e as mensagens.
+
+Confira à mão os textos com gênero (palavras "Novo", "cadastrado", "excluído", "Nenhum", "Este"): para algo feminino como "turma" ou "matrícula", vira "Nova", "cadastrada", "excluída", "Nenhuma", "Esta". Os textos estão em `index.php`, `criar.php` e `editar.php`.
+
+Troque também o nome do sistema em `cabecalho.php` (título da aba, `<h1>` e subtítulo, que ainda dizem "Estoque").
+
+### Passo 2: trocar as colunas
+
+Hoje as colunas são `nome`, `categoria`, `preco` e `quantidade`. Troque pelas da prova (ex.: `nome`, `turma`, `nota`). Siga as etiquetas `[NOVA COLUNA]`:
+
+| # | Arquivo | O que fazer |
+|---|---|---|
+| 1/5 | `banco.sql` | Colunas do `CREATE TABLE` **e** colunas/valores do `INSERT` de exemplo |
+| 2/5 | `conexao.php` | Regras em `validar()` (modelos de validação no comentário) |
+| 3/5 | `formulario.php` | Um `<label>` + `<input>` por coluna (o `name` é igual ao nome da coluna; há modelos de data, e-mail, textarea e select no comentário) |
+| 4/5 | `criar.php` e `editar.php` | O array do `$_POST`, o `INSERT` e o `UPDATE` (e o array inicial `$produto`, em `criar.php`) |
+| 5/5 | `index.php` | Um `<th>` e um `<td>` por coluna, na mesma ordem |
+
+Depois de mexer no `banco.sql`, **importe de novo** (ele apaga a tabela antiga e recria).
+
+Dica: o `id` não aparece em formulário nenhum. O MySQL numera sozinho.
+
+### Passo 3: tirar o que é só de estoque
+
+- Em `index.php`, a etiqueta "baixo" (quantidade de 5 ou menos) e o `number_format` do preço. Se não tiver preço ou quantidade, apague.
+
+### Tipo de coluna x tipo de campo
+
+| Dado | Coluna no `banco.sql` | `<input>` no formulário |
+|---|---|---|
+| Texto curto | `VARCHAR(100)` | `type="text"` |
+| Texto longo | `TEXT` | `<textarea>` |
+| E-mail | `VARCHAR(100)` | `type="email"` |
+| Inteiro | `INT` | `type="number" step="1"` |
+| Decimal (preço, nota) | `DECIMAL(10,2)` | `type="number" step="0.01"` |
+| Data | `DATE` | `type="date"` |
+| Opções fixas | `VARCHAR(30)` | `<select>` |
+
+### Se a prova pedir uma segunda tabela (ex.: alunos **e** turmas)
+
+Copie `index.php`, `criar.php`, `editar.php`, `excluir.php` e `formulario.php` com outros nomes (ex.: `turmas.php`, `turma_criar.php`...), faça o Passo 1 e o Passo 2 nas cópias e crie a tabela nova no `banco.sql`. Lembre de atualizar os links (`href` e `header('Location: ...')`) para os novos nomes.
+
+---
+
+## Mudar o estilo (CSS)
+
+O site usa **um único arquivo**: `style.css`. Ele tem 2 partes:
+
+1. **Layout** (no começo): grade, tabela, botões, formulário. Não precisa mexer.
+2. **Tema** (no final, entre as linhas `INÍCIO DO TEMA` e `FIM DO TEMA`): cores, fonte, bordas e cantos.
+
+Para usar outro dos 5 estilos (**Papel, Terminal, Oceano, Brutal, Floresta**):
+
+1. Abra o `temas.css` e copie o tema que quiser, **da linha de INÍCIO até a linha de FIM**.
+2. No `style.css`, apague o tema que está no final (também de INÍCIO até FIM) e cole o novo no lugar.
+3. Recarregue com `Ctrl+F5`.
+
+Para um visual próprio, é só mudar os valores do bloco `:root` do tema. O `temas.css` explica o que cada variável faz.
