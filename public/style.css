@@ -1,0 +1,396 @@
+/* ============================================================
+   COMO FUNCIONA
+   1) A parte "BASE" usa só variáveis (var(--algo)).
+   2) Cada tema (parte "TEMAS") só muda o valor dessas variáveis.
+   3) O JavaScript troca o atributo data-tema no <html>, e pronto.
+
+   Para criar um 6º tema: copie um bloco de [data-tema="..."],
+   mude os valores e adicione um botão no index.html.
+   ============================================================ */
+
+
+/* ====================== TEMAS ====================== */
+
+/* 1) PAPEL — caderno/jornal, serifado, tinta e vermelho-tijolo */
+:root,
+:root[data-tema="papel"] {
+  --fundo: #efe7d6;
+  --cartao: #fbf6ea;
+  --texto: #251f18;
+  --suave: #7b6f5e;
+  --linha: #d8ccb4;
+  --destaque: #bf3a22;
+  --sobre-destaque: #fff6ec;
+  --perigo: #9c2415;
+
+  --raio: 2px;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: Georgia, "Times New Roman", serif;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-numero: Georgia, "Times New Roman", serif;
+  --caixa-alta: none;
+}
+
+/* 2) TERMINAL — fundo preto, texto verde, tudo monoespaçado */
+:root[data-tema="terminal"] {
+  --fundo: #070b08;
+  --cartao: #0d140f;
+  --texto: #b4f0bf;
+  --suave: #5c8967;
+  --linha: #1d3624;
+  --destaque: #3dff8b;
+  --sobre-destaque: #03140a;
+  --perigo: #ff6b5e;
+
+  --raio: 0px;
+  --borda: 1px;
+  --sombra: none;
+  --fonte: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --fonte-titulo: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --fonte-numero: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --caixa-alta: none;
+}
+
+/* 3) OCEANO — azul-marinho profundo com água-viva ciano, cantos suaves */
+:root[data-tema="oceano"] {
+  --fundo: #0a1726;
+  --cartao: #112338;
+  --texto: #e2edf8;
+  --suave: #86a2be;
+  --linha: #223f5d;
+  --destaque: #4cc9d6;
+  --sobre-destaque: #04222a;
+  --perigo: #ff8a80;
+
+  --raio: 12px;
+  --borda: 1px;
+  --sombra: 0 10px 30px rgba(0, 0, 0, .35);
+  --fonte: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --fonte-titulo: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --fonte-numero: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --caixa-alta: none;
+}
+
+/* 4) BRUTAL — amarelo berrante, borda grossa preta, sombra dura */
+:root[data-tema="brutal"] {
+  --fundo: #ffe14a;
+  --cartao: #ffffff;
+  --texto: #111111;
+  --suave: #4a4a4a;
+  --linha: #111111;
+  --destaque: #2f6bff;
+  --sobre-destaque: #ffffff;
+  --perigo: #e5251b;
+
+  --raio: 0px;
+  --borda: 3px;
+  --sombra: 6px 6px 0 #111111;
+  --fonte: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --fonte-titulo: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --fonte-numero: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --caixa-alta: uppercase;
+}
+
+/* 5) FLORESTA — verdes terrosos, cantos bem redondos, ar de app de plantas */
+:root[data-tema="floresta"] {
+  --fundo: #dfe7d2;
+  --cartao: #f3f6ea;
+  --texto: #1d2b1c;
+  --suave: #60775a;
+  --linha: #c3d0ae;
+  --destaque: #3b7a3d;
+  --sobre-destaque: #f3f6ea;
+  --perigo: #b3402d;
+
+  --raio: 18px;
+  --borda: 2px;
+  --sombra: 0 6px 0 #c3d0ae;
+  --fonte: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --fonte-titulo: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --fonte-numero: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --caixa-alta: none;
+}
+
+
+/* ====================== BASE ====================== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  line-height: 1.5;
+  transition: background .25s, color .25s;
+}
+
+h1, h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  text-transform: var(--caixa-alta);
+  letter-spacing: -.01em;
+}
+h1 { font-size: 2.2rem; line-height: 1.1; }
+h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+
+.sub { margin: .25rem 0 0; color: var(--suave); }
+
+/* ---------- topo + seletor de tema ---------- */
+.topo {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.temas { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+.temas button {
+  font: inherit;
+  font-size: .85rem;
+  padding: .35rem .8rem;
+  color: var(--texto);
+  background: transparent;
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+.temas button:hover { border-color: var(--destaque); }
+.temas button.ativo {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--sobre-destaque);
+}
+
+/* ---------- layout ---------- */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--cartao);
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 1.25rem;
+}
+
+/* ---------- resumo ---------- */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.resumo div {
+  background: var(--cartao);
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: .9rem 1.1rem;
+}
+.resumo span {
+  display: block;
+  font-family: var(--fonte-numero);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--destaque);
+}
+.resumo small {
+  color: var(--suave);
+  text-transform: var(--caixa-alta);
+  font-size: .8rem;
+}
+
+/* ---------- formulário ---------- */
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+label {
+  display: grid;
+  gap: .3rem;
+  font-size: .85rem;
+  color: var(--suave);
+  text-transform: var(--caixa-alta);
+}
+
+input {
+  font: inherit;
+  font-size: 1rem;
+  text-transform: none;
+  color: var(--texto);
+  background: var(--fundo);
+  border: var(--borda) solid var(--linha);
+  border-radius: var(--raio);
+  padding: .55rem .7rem;
+  width: 100%;
+}
+input:focus-visible {
+  outline: 2px solid var(--destaque);
+  outline-offset: 1px;
+}
+
+/* ---------- botões ---------- */
+.acoes { display: flex; gap: .5rem; }
+
+button { font: inherit; cursor: pointer; }
+
+.btn-principal,
+.btn-sec,
+.btn-perigo {
+  font-size: .9rem;
+  padding: .5rem 1rem;
+  border: var(--borda) solid var(--texto);
+  border-radius: var(--raio);
+  text-transform: var(--caixa-alta);
+  transition: transform .1s;
+}
+.btn-principal:active, .btn-sec:active, .btn-perigo:active { transform: translateY(1px); }
+
+.btn-principal {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--sobre-destaque);
+}
+.btn-sec {
+  background: transparent;
+  color: var(--texto);
+  border-color: var(--linha);
+}
+.btn-sec:hover { border-color: var(--texto); }
+.btn-perigo {
+  background: transparent;
+  color: var(--perigo);
+  border-color: var(--perigo);
+}
+.btn-perigo:hover { background: var(--perigo); color: var(--cartao); }
+
+button:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+
+/* ---------- mensagem ---------- */
+#msg { margin: 1rem 0 0; min-height: 1.4em; font-size: .9rem; }
+#msg.ok { color: var(--destaque); }
+#msg.erro { color: var(--perigo); }
+
+/* ---------- lista ---------- */
+.lista-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.lista-topo h2 { margin: 0; }
+.lista-topo input { max-width: 300px; }
+
+table { width: 100%; border-collapse: collapse; }
+
+th {
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--suave);
+  padding: .5rem .6rem;
+  border-bottom: var(--borda) solid var(--texto);
+}
+td {
+  padding: .7rem .6rem;
+  border-bottom: var(--borda) solid var(--linha);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: 0; }
+
+.botoes { text-align: right; white-space: nowrap; }
+.botoes button { margin-left: .3rem; }
+
+.etiqueta {
+  font-style: normal;
+  margin-left: .4rem;
+  padding: .05rem .45rem;
+  font-size: .7rem;
+  text-transform: uppercase;
+  color: var(--perigo);
+  border: var(--borda) solid var(--perigo);
+  border-radius: var(--raio);
+}
+
+#vazio { text-align: center; color: var(--suave); margin: 1.5rem 0 .5rem; }
+
+
+/* ====================== DETALHES DE CADA TEMA ====================== */
+/* Só o que não dá para resolver apenas com variáveis */
+
+/* Papel: título em itálico e linha dupla embaixo, como cabeçalho de jornal */
+:root[data-tema="papel"] h1 { font-style: italic; }
+:root[data-tema="papel"] .topo { border-bottom: 3px double var(--linha); margin-bottom: 1.25rem; padding-bottom: 1rem; }
+
+/* Terminal: prompt antes do título e cursor piscando */
+:root[data-tema="terminal"] h1::before { content: "> "; color: var(--destaque); }
+:root[data-tema="terminal"] h1::after  { content: "_"; color: var(--destaque); animation: piscar 1s steps(1) infinite; }
+:root[data-tema="terminal"] .card,
+:root[data-tema="terminal"] .resumo div { border-style: dashed; }
+@keyframes piscar { 50% { opacity: 0; } }
+
+/* Oceano: botão principal com leve brilho */
+:root[data-tema="oceano"] .btn-principal { box-shadow: 0 0 18px rgba(76, 201, 214, .35); }
+:root[data-tema="oceano"] input { background: #0c1b2d; }
+
+/* Brutal: botões e inputs "pesados", com sombra dura que afunda ao clicar */
+:root[data-tema="brutal"] h1 { font-size: 2.6rem; }
+:root[data-tema="brutal"] .btn-principal,
+:root[data-tema="brutal"] .btn-sec,
+:root[data-tema="brutal"] .btn-perigo,
+:root[data-tema="brutal"] .temas button {
+  border-color: #111;
+  box-shadow: 3px 3px 0 #111;
+  font-weight: 700;
+}
+:root[data-tema="brutal"] .btn-sec,
+:root[data-tema="brutal"] .temas button { background: #fff; }
+:root[data-tema="brutal"] .btn-perigo { background: #fff; }
+:root[data-tema="brutal"] .btn-principal:active,
+:root[data-tema="brutal"] .btn-sec:active,
+:root[data-tema="brutal"] .btn-perigo:active { transform: translate(3px, 3px); box-shadow: none; }
+:root[data-tema="brutal"] .temas button.ativo { background: #111; color: #ffe14a; }
+:root[data-tema="brutal"] th { border-bottom-width: 3px; color: #111; }
+:root[data-tema="brutal"] input { background: #fff; }
+
+/* Floresta: botões em formato de pílula */
+:root[data-tema="floresta"] .btn-principal,
+:root[data-tema="floresta"] .btn-sec,
+:root[data-tema="floresta"] .btn-perigo,
+:root[data-tema="floresta"] .temas button,
+:root[data-tema="floresta"] .etiqueta,
+:root[data-tema="floresta"] .lista-topo input { border-radius: 999px; }
+:root[data-tema="floresta"] .btn-sec { border-color: var(--linha); }
+
+
+/* ====================== CELULAR ====================== */
+@media (max-width: 700px) {
+  .resumo { grid-template-columns: 1fr; }
+
+  /* a tabela vira uma lista de "fichas" */
+  thead { display: none; }
+  table, tbody, tr, td { display: block; }
+  tr { padding: .7rem 0; border-bottom: var(--borda) solid var(--linha); }
+  tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: .2rem 0; display: flex; justify-content: space-between; gap: 1rem; }
+  td[data-rotulo]::before { content: attr(data-rotulo); color: var(--suave); }
+  .botoes { justify-content: flex-end; padding-top: .5rem; }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estoque</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Aplica o tema salvo ANTES da página aparecer (evita "piscar" outro tema) -->
+  <script>
+    document.documentElement.dataset.tema = localStorage.getItem('tema') || 'papel';
+  </script>
+</head>
+<body>
+
+  <header class="topo">
+    <div>
+      <h1>Estoque</h1>
+      <p class="sub">Cadastro de produtos</p>
+    </div>
+
+    <!-- Os 5 estilos de CSS. O data-tema do botão é o nome do tema no style.css -->
+    <nav class="temas" aria-label="Escolher estilo">
+      <button data-tema="papel">Papel</button>
+      <button data-tema="terminal">Terminal</button>
+      <button data-tema="oceano">Oceano</button>
+      <button data-tema="brutal">Brutal</button>
+      <button data-tema="floresta">Floresta</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Resumo (preenchido pelo app.js) -->
+    <section class="resumo">
+      <div><span id="resumo-itens">0</span><small>produtos</small></div>
+      <div><span id="resumo-unidades">0</span><small>unidades</small></div>
+      <div><span id="resumo-valor">R$ 0,00</span><small>valor em estoque</small></div>
+    </section>
+
+    <!-- FORMULÁRIO (serve para cadastrar e para editar) -->
+    <section class="card">
+      <h2 id="form-titulo">Novo produto</h2>
+
+      <form id="form">
+        <input type="hidden" name="id">
+
+        <!-- [NOVA COLUNA] adicione um <label> + <input> aqui.
+             O atributo name tem que ser igual ao nome da coluna no banco. -->
+        <label>Nome
+          <input name="nome" required>
+        </label>
+
+        <label>Categoria
+          <input name="categoria" list="lista-categorias" required>
+          <datalist id="lista-categorias"></datalist>
+        </label>
+
+        <label>Preço (R$)
+          <input name="preco" type="number" step="0.01" min="0" required>
+        </label>
+
+        <label>Quantidade
+          <input name="quantidade" type="number" step="1" min="0" required>
+        </label>
+
+        <div class="acoes">
+          <button type="submit" class="btn-principal" id="btn-salvar">Cadastrar</button>
+          <button type="button" class="btn-sec" id="btn-cancelar" hidden>Cancelar</button>
+        </div>
+      </form>
+
+      <p id="msg" role="status"></p>
+    </section>
+
+    <!-- LISTA -->
+    <section class="card">
+      <div class="lista-topo">
+        <h2>Produtos</h2>
+        <input id="busca" type="search" placeholder="Buscar por nome ou categoria…">
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <!-- [NOVA COLUNA] adicione um <th> aqui (mesma ordem do <td> no app.js) -->
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Qtd.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabela"></tbody>
+      </table>
+
+      <p id="vazio" hidden>Nenhum produto encontrado.</p>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

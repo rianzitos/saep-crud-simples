@@ -1,0 +1,16 @@
+{
+  "name": "saep-crud-simples",
+  "version": "1.0.0",
+  "description": "CRUD simples de produtos (Node + Express + SQLite) com 5 temas de CSS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
