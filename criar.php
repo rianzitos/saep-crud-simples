@@ -15,6 +15,8 @@ require 'conexao.php';
 $erros = [];
 
 // [NOVA COLUNA] 4/5 (a) -> valores iniciais do formulário: uma chave para cada coluna, vazia
+// TINYINT sim/não: o valor inicial é um número. 'ativo' => 1 abre o checkbox já MARCADO; 0 abre desmarcado.
+//   Ex.:  $produto = ['nome' => '', ..., 'quantidade' => '', 'ativo' => 1];
 $produto = ['nome' => '', 'categoria' => '', 'preco' => '', 'quantidade' => ''];
 
 // $_SERVER['REQUEST_METHOD'] diz se a página foi aberta (GET) ou enviada (POST)
@@ -27,6 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'categoria'  => trim($_POST['categoria'] ?? ''),
         'preco'      => str_replace(',', '.', trim($_POST['preco'] ?? '')),   // aceita 10,50 e 10.50
         'quantidade' => trim($_POST['quantidade'] ?? ''),
+
+        // TINYINT sim/não com CHECKBOX: o navegador só envia o campo se estiver MARCADO.
+        // Então: veio no $_POST = 1, não veio = 0. Use SEMPRE número (1 ou 0).
+        // Não use true/false: o PDO transforma false em texto vazio e o MySQL dá erro.
+        //   'ativo' => isset($_POST['ativo']) ? 1 : 0,
+        // Com SELECT (opções 1 e 0) é só converter para número:
+        //   'ativo' => (int) ($_POST['ativo'] ?? 0),
+        // TINYINT número pequeno (idade...) é como qualquer número:
+        //   'idade' => trim($_POST['idade'] ?? ''),
     ];
 
     $erros = validar($produto);   // função do conexao.php
@@ -35,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // [NOVA COLUNA] 4/5 (c) -> o INSERT: coloque a coluna na lista E um "?" a mais em VALUES.
         // Os "?" são preenchidos pelos valores do execute(), na mesma ordem.
+        // Com TINYINT: acrescente  ativo  na lista de colunas, mais um "?" e  $produto['ativo']  no execute().
+        // O valor 1 ou 0 entra normalmente, sem aspas nem tratamento especial.
         // (Isso se chama "prepared statement": é o que protege contra SQL Injection.
         //  Nunca coloque $_POST direto dentro do texto do SQL.)
         $sql = 'INSERT INTO produtos (nome, categoria, preco, quantidade) VALUES (?, ?, ?, ?)';

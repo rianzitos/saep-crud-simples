@@ -51,6 +51,26 @@
       Número inteiro: <input type="number" name="xxx" step="1" ...>
       Número decimal: <input type="number" name="xxx" step="0.01" ...>
 
+      TINYINT sim/não, versão CHECKBOX (a mais simples). O "checked" deixa marcado
+      quando o valor do banco é 1. Use a classe "opcao" no label (alinha a caixinha com o texto):
+        <label class="opcao">
+            <input type="checkbox" name="ativo" value="1" <?= $produto['ativo'] ? 'checked' : '' ?>>
+            Ativo
+        </label>
+      (Cuidado: checkbox desmarcado não é enviado pelo navegador. Quem resolve isso é o
+       criar.php / editar.php: veja o comentário "TINYINT" lá.)
+
+      TINYINT sim/não, versão SELECT (quando a prova pedir "Sim" e "Não" como lista):
+        <label>Ativo
+            <select name="ativo">
+                <option value="1" <?= $produto['ativo'] == 1 ? 'selected' : '' ?>>Sim</option>
+                <option value="0" <?= $produto['ativo'] == 0 ? 'selected' : '' ?>>Não</option>
+            </select>
+        </label>
+
+      TINYINT número pequeno (idade, nota de 0 a 10...): é um número comum.
+        <input type="number" name="idade" step="1" min="0" max="120" value="<?= h($produto['idade']) ?>">
+
       Texto longo:
         <label>Descrição
             <textarea name="xxx" rows="4"><?= h($produto['xxx']) ?></textarea>

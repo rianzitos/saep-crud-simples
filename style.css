@@ -113,6 +113,11 @@ input, select, textarea {
   padding: .55rem .7rem;
   width: 100%;
 }
+/* checkbox (para colunas TINYINT sim/não): a caixinha fica ao lado do texto,
+   usando <label class="opcao"> no formulario.php */
+.opcao { display: flex; align-items: center; gap: .5rem; color: var(--texto); text-transform: none; font-size: 1rem; }
+input[type="checkbox"] { width: 1.2rem; height: 1.2rem; padding: 0; accent-color: var(--destaque); }
+
 input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
 .acoes { display: flex; gap: .5rem; }
 
