@@ -6,6 +6,7 @@
 //
 //  [ADAPTAR] Troque "produtos" pelo nome da sua tabela.
 // ============================================================
+require 'auth.php';      // exige login
 require 'conexao.php';
 
 // Só apaga se veio por POST (se alguém abrir excluir.php direto no navegador, não acontece nada)

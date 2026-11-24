@@ -24,6 +24,9 @@
         <h1>Estoque</h1>                   <!-- [ADAPTAR] nome do sistema -->
         <p class="sub">Cadastro de produtos</p>   <!-- [ADAPTAR] subtítulo -->
     </div>
+    <?php if (!empty($_SESSION['usuario_id'])): ?>
+        <a href="logout.php" class="btn btn-sec">Sair</a>
+    <?php endif; ?>
 </header>
 
 <main>

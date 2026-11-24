@@ -10,6 +10,7 @@
 //  [ADAPTAR] Troque "produtos" pelo nome da sua tabela e as colunas
 //  nos lugares marcados com [NOVA COLUNA] 4/5.
 // ============================================================
+require 'auth.php';      // exige login
 require 'conexao.php';
 
 // (int) transforma em número inteiro (qualquer lixo na URL vira 0). Segurança extra.

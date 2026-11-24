@@ -121,6 +121,10 @@ input[type="checkbox"] { width: 1.2rem; height: 1.2rem; padding: 0; accent-color
 input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
 .acoes { display: flex; gap: .5rem; }
 
+/* ---------- login ---------- */
+.login { max-width: 380px; margin: 1rem auto 0; }
+.login form { grid-template-columns: 1fr; }
+
 /* ---------- avisos ---------- */
 .aviso { margin: 0 0 1rem; color: var(--destaque); font-size: .9rem; }
 .erros {
