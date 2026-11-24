@@ -10,6 +10,7 @@
 //  [ADAPTAR] Troque "produtos" pelo nome da sua tabela e as colunas
 //  nos 3 lugares marcados com [NOVA COLUNA] 4/5.
 // ============================================================
+require 'auth.php';      // exige login
 require 'conexao.php';
 
 $erros = [];

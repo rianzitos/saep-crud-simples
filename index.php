@@ -5,6 +5,7 @@
 //  [ADAPTAR] Troque "produtos" pelo nome da sua tabela, os textos das
 //  mensagens e as colunas da tabela HTML (procure [ADAPTAR] e [NOVA COLUNA]).
 // ============================================================
+require 'auth.php';      // exige login
 require 'conexao.php';
 
 // 1) Busca os registros. query() serve quando o SQL não tem valores vindos do usuário.

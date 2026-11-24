@@ -61,3 +61,21 @@ INSERT INTO produtos (nome, categoria, preco, quantidade) VALUES
   ('Mouse Sem Fio',    'Periféricos',  79.50, 32),
   ('Monitor 24"',      'Monitores',   899.00,  4),
   ('Cabo HDMI 2m',     'Cabos',        24.90, 60);
+
+-- ============================================================
+-- LOGIN: tabela de usuários
+-- Usuário padrão:  admin  /  admin123
+-- A senha é guardada como HASH (password_hash do PHP), nunca em texto puro.
+-- Outro usuário/senha:  php -r "echo password_hash('minhasenha', PASSWORD_DEFAULT);"
+-- e cole o resultado na coluna "senha".
+-- ============================================================
+DROP TABLE IF EXISTS usuarios;
+
+CREATE TABLE usuarios (
+  id      INT AUTO_INCREMENT PRIMARY KEY,
+  usuario VARCHAR(50)  NOT NULL UNIQUE,
+  senha   VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuarios (usuario, senha) VALUES
+  ('admin', '$2y$10$ZmmwRJA2XPqFSROUrNSFKOb9sS1z9zIGmGuv4G1kCvHURfhh7Tc8S');

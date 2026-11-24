@@ -6,7 +6,8 @@ PHP puro + MySQL (PDO). Sem framework e sem JavaScript (só o `confirm()` do bot
 
 1. Copie esta pasta para `C:\xampp\htdocs\saep-crud-simples` e ligue **Apache** e **MySQL**.
 2. No phpMyAdmin, aba **Importar**, escolha o `banco.sql` e execute.
-3. Abra http://localhost/saep-crud-simples/
+3. Abra http://localhost/saep-crud-simples/ e entre com **usuário `admin`** e **senha `admin123`**
+   (já importou o `banco.sql` antes do login existir? Importe de novo: ele cria a tabela `usuarios`).
 
 Sem XAMPP: `mysql -u root < banco.sql` e depois `php -S localhost:8000` dentro da pasta.
 Se o `root` do seu MySQL tiver senha, mude em `conexao.php`.
@@ -23,6 +24,8 @@ Se o `root` do seu MySQL tiver senha, mude em `conexao.php`.
 | `excluir.php` | **D**elete: apaga (id por POST) |
 | `formulario.php` | Formulário usado por `criar.php` e `editar.php` |
 | `cabecalho.php` / `rodape.php` | Topo e fim de todas as páginas |
+| `login.php` / `logout.php` | Tela de **login** (`admin` / `admin123`, tabela `usuarios`) e botão **Sair** |
+| `auth.php` | Barreira de login: toda página interna faz `require 'auth.php';` |
 | `style.css` | **O** CSS do site (único arquivo de estilo) |
 | `temas.css` | Os 5 estilos prontos, só para copiar (o site não usa este arquivo) |
 
